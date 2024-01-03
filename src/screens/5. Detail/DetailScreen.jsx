@@ -1,9 +1,8 @@
 import React from "react";
-import { Animated, Dimensions, Image, ScrollView, StatusBar, StyleSheet, Text, View, } from "react-native";
+import { Animated, Dimensions, Image, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faCircleCheck } from '@fortawesome/free-solid-svg-icons/faCircleCheck';
-
+import { faChevronLeft, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
 import { Colors } from "../../../assets/themes/Theme";
 
@@ -14,7 +13,7 @@ const DetailScreen = ({ route, navigation }) => {
   const scrollY = new Animated.Value(0);
   const translateY = scrollY.interpolate({
     inputRange: [0, 225],
-    outputRange: [0, -225]
+    outputRange: [0, -225],
   });
 
   return (
@@ -24,25 +23,31 @@ const DetailScreen = ({ route, navigation }) => {
       <Animated.View
         style={{ 
           transform: [
-            {translateY: translateY}
+            { translateY: translateY },
           ],
           elevation: 4,
           zIndex: 100,
         }}
       >
         <View style={styles.imgContainer}>
-          <Image source={foodImg} style={styles.foodImg}/>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+            <FontAwesomeIcon icon={faChevronLeft} size={20} color="white" />
+          </TouchableOpacity>
+          <Image source={foodImg} style={styles.foodImg} />
         </View>
       </Animated.View>
 
-      <ScrollView contentContainerStyle={styles.detailContainer} onScroll={(e) => {
-        scrollY.setValue(e.nativeEvent.contentOffset.y)
-      }}>
+      <ScrollView
+        contentContainerStyle={styles.detailContainer}
+        onScroll={(e) => {
+          scrollY.setValue(e.nativeEvent.contentOffset.y);
+        }}
+      >
         <Text style={styles.foodNameTxt}>{foodName}</Text>
         <Text style={styles.foodCategoryTxt}>{foodCategory}{foodTime}</Text>
 
         <View style={styles.userContainer}>
-          <Image source={userAvatar} style={styles.userAvatarImg}/>
+          <Image source={userAvatar} style={styles.userAvatarImg} />
           <Text style={styles.userNameTxt}>{userName}</Text>
         </View>
         
@@ -58,17 +63,17 @@ const DetailScreen = ({ route, navigation }) => {
           <Text style={styles.titleTxt}>Ingredients</Text>
           
           <View style={styles.ingredientContainer}>
-            <FontAwesomeIcon icon={faCircleCheck} size={25} style={styles.icon}/>
+            <FontAwesomeIcon icon={faCircleCheck} size={25} style={styles.icon} />
             <Text style={styles.contentTxt}>Ingredient 1</Text>
           </View>
 
           <View style={styles.ingredientContainer}>
-            <FontAwesomeIcon icon={faCircleCheck} size={25} style={styles.icon}/>
+            <FontAwesomeIcon icon={faCircleCheck} size={25} style={styles.icon} />
             <Text style={styles.contentTxt}>Ingredient 2</Text>
           </View>
           
           <View style={styles.ingredientContainer}>
-            <FontAwesomeIcon icon={faCircleCheck} size={25} style={styles.icon}/>
+            <FontAwesomeIcon icon={faCircleCheck} size={25} style={styles.icon} />
             <Text style={styles.contentTxt}>Ingredient 3</Text>
           </View>
         </View>
@@ -80,7 +85,9 @@ const DetailScreen = ({ route, navigation }) => {
           <View style={styles.stepContainer}>
             <Text style={styles.stepNumber}>1</Text>
             <View>
-              <Text style={styles.stepInstruction}>Your recipe has been uploaded, you can see it on your profile. Your recipe has been uploaded, you can see it on your</Text>
+              <Text style={styles.stepInstruction}>
+                Your recipe has been uploaded, you can see it on your profile. Your recipe has been uploaded, you can see it on your
+              </Text>
               <Image source={foodImg} style={styles.stepImg} />
             </View>
           </View>
@@ -88,7 +95,9 @@ const DetailScreen = ({ route, navigation }) => {
           <View style={styles.stepContainer}>
             <Text style={styles.stepNumber}>2</Text>
             <View>
-              <Text style={styles.stepInstruction}>Your recipe has been uploaded, you can see it on your profile. Your recipe has been uploaded, you can see it on your</Text>
+              <Text style={styles.stepInstruction}>
+                Your recipe has been uploaded, you can see it on your profile. Your recipe has been uploaded, you can see it on your
+              </Text>
               <Image source={foodImg} style={styles.stepImg} />
             </View>
           </View>
@@ -96,7 +105,7 @@ const DetailScreen = ({ route, navigation }) => {
       </ScrollView>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -206,6 +215,12 @@ const styles = StyleSheet.create({
     width: 0.78*windowWidth,
     height: 0.78*windowWidth,
     resizeMode: "contain",
+  },
+  backButton: {
+    position: "absolute",
+    top: 30,
+    left: 20,
+    zIndex: 1,
   },
 });
 

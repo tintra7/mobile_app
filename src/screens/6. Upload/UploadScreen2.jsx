@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Image, } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Image } from 'react-native';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import { useNavigation } from '@react-navigation/native';
 import Modal from 'react-native-modal';
-import { useRoute } from "@react-navigation/native"
+
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faGripVertical, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 
 import { Colors } from '../../../assets/themes/Theme';
 
 const UploadScreen2 = ({ navigation }) => {
   const [isModalVisible, setModalVisible] = useState(false);
-  const route = useRoute();
-  const foodName = route.params?.foodName
-  const description = route.params?.description
-  const duration = route.params?.duration
-  console.log(foodName)
+  const [ingredients, setIngredients] = useState(['']);
+  const [steps, setSteps] = useState([{ number: 1, text: '' }]);
+
   navigation = useNavigation();
 
   const handleFinishPress = () => {
@@ -25,6 +23,15 @@ const UploadScreen2 = ({ navigation }) => {
   const closeModal = () => {
     setModalVisible(false);
     navigation.navigate('HomeScreen');
+  };
+
+  const addIngredient = () => {
+    setIngredients((prevIngredients) => ['', ...prevIngredients]);
+  };
+
+  const addStep = () => {
+    const newStepNumber = steps.length + 1;
+    setSteps((prevSteps) => [...prevSteps, { number: newStepNumber, text: '' }]);
   };
 
   return (
@@ -46,33 +53,28 @@ const UploadScreen2 = ({ navigation }) => {
               <Text style={styles.sectionButton}>＋ Group</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.ingredientsRow}>
-            <FontAwesomeIcon
-              icon={faGripVertical}
-              color={Colors.INFO_SECONDARY}
-              style={styles.gripIcon}
-            />
-            <TextInput
-              style={styles.ingredientsInputText}
-              placeholder="Enter ingredient"
-              placeholderTextColor={Colors.INFO_SECONDARY}
-            />
-          </View>
+          {ingredients.map((ingredient, index) => (
+            <View key={index} style={styles.ingredientsRow}>
+              <FontAwesomeIcon
+                icon={faGripVertical}
+                color={Colors.INFO_SECONDARY}
+                style={styles.gripIcon}
+              />
+              <TextInput
+                style={styles.ingredientsInputText}
+                placeholder="Enter ingredient"
+                placeholderTextColor={Colors.INFO_SECONDARY}
+                value={ingredient}
+                onChangeText={(text) => {
+                  const updatedIngredients = [...ingredients];
+                  updatedIngredients[index] = text;
+                  setIngredients(updatedIngredients);
+                }}
+              />
+            </View>
+          ))}
 
-          <View style={styles.ingredientsRow}>
-            <FontAwesomeIcon
-              icon={faGripVertical}
-              color={Colors.INFO_SECONDARY}
-              style={styles.gripIcon}
-            />
-            <TextInput
-              style={styles.ingredientsInputText}
-              placeholder="Enter ingredient"
-              placeholderTextColor={Colors.INFO_SECONDARY}
-            />
-          </View>
-
-          <TouchableOpacity>
+          <TouchableOpacity onPress={addIngredient}>
             <Text style={styles.addButton}>＋ Ingredient</Text>
           </TouchableOpacity>
         </View>
@@ -81,22 +83,30 @@ const UploadScreen2 = ({ navigation }) => {
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionHeaderText}>Steps</Text>
           
-          <View style={styles.stepContainer}>
-            <Text style={styles.stepNumber}>1</Text>
-            <TextInput
-              style={[styles.stepInputText, { height: 100 }]}
-              placeholder="Tell a little about your food"
-              placeholderTextColor={Colors.INFO_SECONDARY}
-              multiline
-            />
-          </View>
+          {steps.map((step, index) => (
+            <View key={index} style={styles.stepContainer}>
+              <Text style={styles.stepNumber}>{step.number}</Text>
+              <TextInput
+                style={[styles.stepInputText, { height: 100 }]}
+                placeholder={`Step ${step.number}`}
+                placeholderTextColor={Colors.INFO_SECONDARY}
+                multiline
+                value={step.text}
+                onChangeText={(text) => {
+                  const updatedSteps = [...steps];
+                  updatedSteps[index].text = text;
+                  setSteps(updatedSteps);
+                }}
+              />
+            </View>
+          ))}
 
-          <TouchableOpacity style={styles.addStepsButton}>
-            <FontAwesomeIcon icon={faPlus} size={22} color={Colors.PRIMARY_MAIN} />
+          <TouchableOpacity style={styles.addStepsButton} onPress={addStep}>
+            <FontAwesomeIcon icon={faCirclePlus} size={22} color={Colors.PRIMARY_MAIN} />
           </TouchableOpacity>
         </View>
       </ScrollView>
-    
+
       {/* Back & Finish Button */}
       <HideWithKeyboard>
         <View style={styles.footer}>

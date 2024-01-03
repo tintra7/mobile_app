@@ -33,14 +33,29 @@ const UserProfileScreen = ({ route, navigation }) => {
     }
   };
 
+  const navigateToDetail = (recipe) => {
+    navigation.navigate('DetailScreen', {
+      foodId: recipe.id,
+      foodName: recipe.name,
+      foodDescription: recipe.description,
+      foodImg: recipe.image,
+      foodCategory: recipe.category,
+      foodTime: recipe.time,
+      userAvatar: recipe.userAvatar,
+      userName: recipe.userName,
+    });
+  };
+
   const renderRecipeItem = ({ item }) => (
-    <View style={styles.recipeItem}>
-      <Image source={item.image} style={styles.recipeImage} />
-      <Text style={styles.recipeName}>{item.name}</Text>
-      <View style={styles.recipeInfo}>
-        <Text style={styles.categoryInfo}>{item.category}</Text>
+    <TouchableOpacity onPress={() => navigateToDetail(item)}>
+      <View style={styles.recipeItem}>
+        <Image source={item.image} style={styles.recipeImage} />
+        <Text style={styles.recipeName}>{item.name}</Text>
+        <View style={styles.recipeInfo}>
+          <Text style={styles.categoryInfo}>{item.category}</Text>
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   useFocusEffect(

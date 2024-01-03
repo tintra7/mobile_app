@@ -36,14 +36,29 @@ const ProfileScreen = ({ navigation }) => {
     }
   };
 
+  const navigateToDetail = (recipe) => {
+    navigation.navigate('DetailScreen', {
+      foodId: recipe.id,
+      foodName: recipe.name,
+      foodDescription: recipe.description,
+      foodImg: recipe.image,
+      foodCategory: recipe.category,
+      foodTime: recipe.time,
+      userAvatar: recipe.userAvatar,
+      userName: recipe.userName,
+    });
+  };
+
   const renderRecipeItem = ({ item, index }) => (
-    <View style={[styles.recipeItem, index % 2 !== 0 && { marginLeft: "5%" }]}>
-      <Image source={item.image} style={styles.recipeImage} />
-      <Text style={styles.recipeName}>{item.name}</Text>
-      <View style={styles.recipeInfo}>
-        <Text style={styles.categoryInfo}>{item.category}{item.time}</Text>
+    <TouchableOpacity onPress={() => navigateToDetail(item)}>
+      <View style={[styles.recipeItem, index % 2 !== 0 && { marginLeft: "5%" }]}>
+        <Image source={item.image} style={styles.recipeImage} />
+        <Text style={styles.recipeName}>{item.name}</Text>
+        <View style={styles.recipeInfo}>
+          <Text style={styles.categoryInfo}>{item.category}{item.time}</Text>
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   const openModalUserName = () => {

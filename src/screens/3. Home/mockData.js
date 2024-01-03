@@ -103,6 +103,58 @@ const recipes = [
     follow: '475',
     followers: '1,387'
   },
+  {
+    id: 9,
+    userName: "Kyle Scheible",
+    avatar: require("../../../assets/images/Avatar9.png"),
+    image: require("../../../assets/images/Recipe9.png"),
+    name: "Cocktail",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    category: "Drink",
+    time: " • > 30 min",
+    recipes: '24',
+    follow: '398',
+    followers: '10,588'
+  },
+  {
+    id: 10,
+    userName: "Louisa Clarke",
+    avatar: require("../../../assets/images/Avatar10.png"),
+    image: require("../../../assets/images/Recipe10.png"),
+    name: "Mojito",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    category: "Drink",
+    time: " • > 30 min",
+    recipes: '388',
+    follow: '838',
+    followers: '3,858'
+  },
+  {
+    id: 11,
+    userName: "William Traynor",
+    avatar: require("../../../assets/images/Avatar11.png"),
+    image: require("../../../assets/images/Recipe11.png"),
+    name: "Spaghetti",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    category: "Food",
+    time: " • > 45 min",
+    recipes: '48',
+    follow: '30',
+    followers: '15,475'
+  },
+  {
+    id: 12,
+    userName: "Peter Parker",
+    avatar: require("../../../assets/images/Avatar12.png"),
+    image: require("../../../assets/images/Recipe12.png"),
+    name: "Chocolate Mousse",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    category: "Dessert",
+    time: " • > 60 min",
+    recipes: '78',
+    follow: '49',
+    followers: '598'
+  },
 ];
 
 export default recipes;
